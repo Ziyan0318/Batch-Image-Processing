@@ -48,3 +48,19 @@ else:
     # save result
     cv2.imwrite(cropped_output_path, crop_img)
     print(f"Cropped image saved: {cropped_output_path}")
+
+
+# REMOVE BACKGROUND
+from rembg import remove
+import io
+
+# OpenCV image convert to PIL image
+crop_img_rgb = cv2.cvtColor(crop_img, cv2.COLOR_BGR2RGB) 
+crop_pil = Image.fromarray(crop_img_rgb)
+
+output_pil = remove(crop_pil) # remove bg
+
+# save transparent bg image as png
+masked_output_path = 'output_cropped_removed.png'
+output_pil.save(masked_output_path)
+print(f"Remove background complete, saved as: {masked_output_path}")
