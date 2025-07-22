@@ -1,0 +1,19 @@
+Automatic crop model's face:
+    1. import tools
+        - PIL: handling images (open, resize, crop)
+        - cv2(OpenCV): used for pixel-level operations and saving the final results
+        - numpy: used to manipulate image data
+        -rembg: AI-based background remover
+        -facenet_pytorch.MTCNN: a pre-trained face detector model to locate faces in the image
+    2. open image
+    3. Detect face in the image
+    4. IF face is detected:
+        -find the face bounding box
+        -calculate crop height as 60% of the face
+    5. convert image to a format the supports transparency
+    6. remoce bg
+    7. prepare a blank white canvas of fixed size (1350 x 1800 pixels, w/ RGBA)
+    8. measure width and height of the cropped image with transparent bg
+    9. calculate x and y offsets to center the cropped image on the canvas
+    10. place the cropped image onto the center of the canvas
+    11. save the final image to output foler (as PNG)
