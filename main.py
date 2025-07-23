@@ -64,3 +64,29 @@ output_pil = remove(crop_pil) # remove bg
 masked_output_path = 'output_cropped_removed.png'
 output_pil.save(masked_output_path)
 print(f"Remove background complete, saved as: {masked_output_path}")
+
+
+# RESIZE
+def resize_and_crop_center(image_pil, target_size = (1350, 1800)):
+    # collect data
+    target_w, target_h = target_size
+    original_w, original_h = image_pil.size
+    # calculate scale, ensure that original image won't be stretched 
+    scale = max(target_w / original_w, target_h / original_h)
+    # Zoom in/out
+    resized_w = int(original_w * scale)
+    resized_h = int(original_h * scale)
+    image_resized = image_pil.resize((resized_w, resized_h), Image.LANCZOS) # Image.LANCZOS is the smoothest and clearest way to zoom
+    # center image
+    left = (resized_w - target_w) // 2
+    top = (resized_h - target_h) // 2
+    right = left + target_w
+    bottom = top + target_h
+    # Performs cropping and return final results
+    image_cropped = image_resized.crop((left, top, right, bottom))
+    return image_cropped
+
+#call function
+final_img = resize_and_crop_center(output_pil, (1350, 1800))
+final_img.save("output_final_1350x1800.png")
+print(f"Resize complete, saved as png.")
